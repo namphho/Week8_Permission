@@ -90,7 +90,7 @@ class HomeFragment : Fragment(), LocationPermissionUtils.LocationComponentListen
     }
 
     private fun registerLocationEvent() {
-        vm.locationEvent.observe(this) {
+        vm.locationEvent.observe(viewLifecycleOwner) {
             Log.e("TAG", "${it.longitude} -- ${it.latitude}")
         }
     }
