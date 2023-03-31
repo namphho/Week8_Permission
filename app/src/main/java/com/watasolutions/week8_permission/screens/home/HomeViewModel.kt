@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.watasolutions.week8_permission.services.location.LocationClient
 import kotlinx.coroutines.launch
 
-class HomeViewModel(val location: LocationClient) : ViewModel() {
+class HomeViewModel(private val location: LocationClient) : ViewModel() {
     private var _locationEvent : MutableLiveData<Location> = MutableLiveData<Location>()
     val locationEvent: LiveData<Location>
     get() = _locationEvent

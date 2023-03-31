@@ -10,23 +10,49 @@
 
         <Button
             android:id="@+id/requestLocation"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="REQUEST LOCATION"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="GET MY LOCATION"
+            app:layout_constraintBottom_toTopOf="@+id/btnOpenPhotoLibrary"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btnOpenPhotoLibrary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="CHOOSE PHOTO"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvLocationTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Open Photo Library"
-            app:layout_constraintEnd_toEndOf="@+id/requestLocation"
-            app:layout_constraintStart_toStartOf="@+id/requestLocation"
-            app:layout_constraintTop_toBottomOf="@+id/requestLocation" />
+            android:layout_marginEnd="16dp"
+            android:text="Lat - Lng"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvMyLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:text="1234-3423"
+            app:layout_constraintEnd_toEndOf="@+id/tvLocationTitle"
+            app:layout_constraintStart_toStartOf="@+id/tvLocationTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvLocationTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

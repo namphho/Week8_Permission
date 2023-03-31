@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.net.Uri
 import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,17 +17,15 @@ class LocationPermissionUtils {
     private var listener: LocationComponentListener? = null
 
     interface LocationComponentListener {
-        fun onLocationFeatureEnable(isEnabled: Boolean)
+        fun onLocationPermission(isGranted: Boolean)
     }
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
     fun registerActivityResultForPermission(fragment: Fragment) {
         requestPermissionLauncher =
-            fragment.registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                listener?.onLocationFeatureEnable(isGranted)
+            fragment.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+                listener?.onLocationPermission(isGranted)
             }
     }
 
@@ -43,14 +43,17 @@ class LocationPermissionUtils {
     ) {
         val context = fragment.requireContext()
         if (isLocationPermissionIsAllow(context)) {
-            listener?.onLocationFeatureEnable(true)
+            listener?.onLocationPermission(true)
         } else {
             requestPermissionLauncher.launch(
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             )
         }
     }
 
+    // Permission:
+    // ACCESS_COARSE_LOCATION
+    // ACCESS_FINE_LOCATION
     private fun isLocationPermissionIsAllow(context: Context): Boolean {
         return ContextCompat.checkSelfPermission(
             context,
@@ -62,8 +65,33 @@ class LocationPermissionUtils {
         context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     }
 
+    fun openAppSetting(context: Context) {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri: Uri = Uri.fromParts("package", context.packageName, null)
+        intent.data = uri
+        context.startActivity(intent)
+    }
+
+
+    fun isLocationEnabled(context: Context): Boolean {
+        val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+        var gpsEnabled = false
+        var networkEnabled = false
+        try {
+            gpsEnabled = lm!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        try {
+            networkEnabled = lm!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return gpsEnabled && networkEnabled
+    }
+
     fun handleLocationPermission(isLocationGranted: Boolean) {
-        listener?.onLocationFeatureEnable(isLocationGranted)
+        listener?.onLocationPermission(isLocationGranted)
     }
 
 }

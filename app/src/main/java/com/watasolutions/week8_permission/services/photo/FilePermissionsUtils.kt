@@ -8,7 +8,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import com.watasolutions.week8_permission.services.PhotoLibraryCallback
 
 interface FilePermissionListener{
     fun onFilePermissionListener(isGranted: Boolean)
@@ -42,7 +41,7 @@ class FilePermissionsUtils {
             }
     }
 
-    fun askPermissions(context: Context, listener: FilePermissionListener) {
+    fun requestPermissions(context: Context, listener: FilePermissionListener) {
         this.filePermissionListener = listener
         if (!hasPermissions(context, PERMISSIONS)) {
             Log.d(
