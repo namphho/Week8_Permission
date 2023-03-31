@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.watasolutions.week8_permission.R
 import com.watasolutions.week8_permission.app.MyApp
 import com.watasolutions.week8_permission.app.ViewModelFactory
@@ -67,6 +68,10 @@ class HomeFragment : Fragment(), LocationPermissionUtils.LocationComponentListen
                 photoLibraryManager.openPhotoLibrary(object : PhotoLibraryCallback {
                     override fun onChoosePhoto(photoFile: File) {
                         Log.e("TAG", photoFile.path)
+                        Glide
+                            .with(this@HomeFragment)
+                            .load(photoFile.path)
+                            .into(binding.ivPreview);
                     }
                 })
             }
